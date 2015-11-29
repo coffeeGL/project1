@@ -40,12 +40,12 @@ private ArrayList<Note> mNotes;
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-		// Если мы не получили представление, заполняем его
+		 
 		if (convertView == null) {
 		convertView = getActivity().getLayoutInflater()
 		.inflate(R.layout.list_item_note, null);
 		}
-		// Настройка представления для объекта Crime
+		 
 		Note c = getItem(position);
 		TextView titleTextView =
 		(TextView)convertView.findViewById(R.id.note_list_item_titleTextView);

@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Note_Keep</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="note_title_hint">Текст</string>
     <string name="note_title_label">Заголовок</string>

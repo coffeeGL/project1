@@ -42,10 +42,10 @@ public class NoteFragment extends Fragment {
 	}
 	public void beforeTextChanged(
 	CharSequence c, int start, int count, int after) {
-	// Здесь намеренно оставлено пустое место
+	// code will be here later
 	}
 	public void afterTextChanged(Editable c) {
-	// И здесь тоже
+	// and here too
 	}
 	});
 	

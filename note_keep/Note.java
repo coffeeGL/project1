@@ -9,7 +9,7 @@ public class Note {
 	private String mTitle;
 	private Date mDate;
 	public Note() {
-	// Генерирование уникального идентификатора
+	// unique identifier generation
 	mId = UUID.randomUUID();
 	mDate = new Date();
 	}
