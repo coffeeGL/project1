@@ -1,0 +1,1 @@
+This project is a simplified version of the Google Keep app.
