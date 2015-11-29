@@ -26,9 +26,17 @@ private ArrayList<Note> mNotes;
 	}
 	
 	@Override
+	public void onResume() {
+	super.onResume();
+	((NoteAdapter)getListAdapter()).notifyDataSetChanged();
+	}
+	
+	
+	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	Note c = ((NoteAdapter)getListAdapter()).getItem(position);
-	Intent i = new Intent(getActivity(), NoteActivity.class);
+	// Start NotePagerActivity with the Note object
+	Intent i = new Intent(getActivity(), NotePagerActivity.class);
 	i.putExtra(NoteFragment.EXTRA_NOTE_ID, c.getId());
 	startActivity(i);
 	}
