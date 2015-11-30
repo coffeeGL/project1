@@ -42,16 +42,16 @@ public class NoteFragment extends Fragment {
 	}
 	public void beforeTextChanged(
 	CharSequence c, int start, int count, int after) {
-	// code will be here later
+	// Здесь намеренно оставлено пустое место
 	}
 	public void afterTextChanged(Editable c) {
-	// and here too
+	// И здесь тоже
 	}
 	});
 	
 	mDateButton = (Button)v.findViewById(R.id.note_date);
 	Date date = mNote.getDate();
-	SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy h:mm a");
+	SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy h:mm");
 	String dateString = sdf.format(date);   
 	mDateButton.setText(dateString);
 	mDateButton.setEnabled(false);

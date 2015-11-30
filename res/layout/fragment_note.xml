@@ -3,32 +3,69 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
+		android:background="#F8F4FF"
 	>
+
 	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/note_title_label"
-		style="@style/BigTextStyle"
-	/>
+	    style="@style/BigTextStyle"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/note_title_label"
+	    android:textStyle="bold|italic"
+	    android:typeface="normal" />
 	
 	<EditText
 	    android:id="@+id/note_title"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:layout_margin="5dp"
 	    android:hint="@string/note_title_hint"
-	    android:layout_margin="5dp" />
+	    android:paddingLeft="20dp"
+	    android:paddingRight="20dp"
+	    android:textColor="#798081"
+	    android:textStyle="italic" />
 	
 	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/note_details_label"
+		android:text="@string/note_details_label"	
+		android:textStyle="bold|italic"
+		android:paddingLeft="20dp"
 		style="@style/BigTextStyle"
 	/>
-	<Button android:id="@+id/note_date"
+	
+	<TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_margin="3dp"
+	    android:paddingLeft="20dp"
+	    android:text="@string/note_details_labe2"
+	    android:textColor="#798081"
+	    android:textStyle="italic" />
+
+	<Button
+	    android:id="@+id/note_date"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="16dp"
+	    android:layout_marginRight="16dp"
+	    android:minHeight="30dp"
+	    android:textSize="14sp"
+	    android:textColor="#798081"
+	    android:background="#F8F4FF"
+	    android:visibility="visible" />
+	
+	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginLeft="16dp"
-		android:layout_marginRight="16dp"
-
+		android:textStyle="italic"
+		android:layout_marginTop="20dp"
+		android:paddingLeft="20dp"
+		android:textSize="12sp"
+		android:text="Последнее обновление"
+		style="@style/BigTextStyle"
 	/>
+	
+	
+
 </LinearLayout>

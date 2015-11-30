@@ -55,15 +55,18 @@ private ArrayList<Note> mNotes;
 		}
 		 
 		Note c = getItem(position);
+
 		TextView titleTextView =
 		(TextView)convertView.findViewById(R.id.note_list_item_titleTextView);
 		titleTextView.setText(c.getTitle());
+				
 		TextView dateTextView =
 		(TextView)convertView.findViewById(R.id.note_list_item_dateTextView);
 		Date date = c.getDate();
-		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy h:mm a");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy h:mm");
 		String dateString = sdf.format(date);   
 		dateTextView.setText(dateString);
+		
 		return convertView;
 		}
 		}
