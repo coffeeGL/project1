@@ -3,13 +3,17 @@ package com.example.note_keep;
 import java.util.Date;
 import java.util.UUID;
 
+ 
+
 public class Note {
 	
 	private UUID mId;
 	private String mTitle;
 	private Date mDate;
+	private Date mTime;//new
+	
 	public Note() {
-	// unique identifier generation
+	// Генерирование уникального идентификатора
 	mId = UUID.randomUUID();
 	mDate = new Date();
 	}
@@ -37,6 +41,14 @@ public class Note {
 	
 	public void setDate(Date date) {
 		mDate = date;
+		}
+	
+	public Date getTime() {
+		return mDate;
+		}
+	
+	public void setTime(Date date) {
+		mTime = date;
 		}
 
 }

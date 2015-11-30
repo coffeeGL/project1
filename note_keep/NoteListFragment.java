@@ -63,7 +63,7 @@ private ArrayList<Note> mNotes;
 		TextView dateTextView =
 		(TextView)convertView.findViewById(R.id.note_list_item_dateTextView);
 		Date date = c.getDate();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy h:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
 		String dateString = sdf.format(date);   
 		dateTextView.setText(dateString);
 		
