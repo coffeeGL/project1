@@ -23,8 +23,7 @@ public class TimePickerFragment extends DialogFragment{
 	
 			private Date mTime;
 				
-	/*we saved date in arguments package of TimePickerFragment, 
-	and TimePickerFragment will be able to use it*/
+	//we saved date in arguments package of TimePickerFragment
 	public static TimePickerFragment newInstance(Date date) {
 		Bundle args = new Bundle();
 		args.putSerializable(EXTRA_TIME, date);
@@ -48,10 +47,11 @@ public class TimePickerFragment extends DialogFragment{
 						.inflate(R.layout.dialog_time, null);
 				
 	TimePicker timePicker = (TimePicker)v.findViewById(R.id.dialog_time_timePicker);
+	timePicker.setIs24HourView(true);
 	timePicker.setOnTimeChangedListener(new OnTimeChangedListener() {
 				
 	public void onTimeChanged(TimePicker view, int hour, int minute) {
-					 
+		   //here we transform hour and minute into date object and put as an argument		 
 		   mTime= new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, hour, minute).getTime();
 		   getArguments().putSerializable(EXTRA_TIME, mTime);
 					}

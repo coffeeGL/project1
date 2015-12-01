@@ -3,7 +3,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
-		android:background="#F8F4FF"
+		android:background="@color/background_color"
 	>
 
 	<TextView
@@ -12,6 +12,7 @@
 	    android:layout_height="wrap_content"
 	    android:text="@string/note_title_label"
 	    android:textStyle="bold|italic"
+	    android:textColor="@color/light_gray"
 	    android:typeface="normal" />
 	
 	<EditText
@@ -22,7 +23,7 @@
 	    android:hint="@string/note_title_hint"
 	    android:paddingLeft="20dp"
 	    android:paddingRight="20dp"
-	    android:textColor="#798081"
+	    android:textColor="@color/light_gray"
 	    android:textStyle="italic" />
 	
 	<TextView
@@ -31,6 +32,7 @@
 		android:text="@string/note_details_label"	
 		android:textStyle="bold|italic"
 		android:paddingLeft="20dp"
+		android:textColor="@color/light_gray"
 		style="@style/BigTextStyle"
 	/>
 	
@@ -38,7 +40,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:background="#F8F4FF"
+		android:background="@color/background_color"
 	>	
 	<TextView
 	    android:layout_width="wrap_content"
@@ -47,23 +49,21 @@
 	    android:layout_weight="1"
 	    android:textSize="14sp"
 	    android:text="@string/note_details_labe2"
-	    android:textColor="#798081"
+	    android:textColor="@color/light_gray"
 	    android:textStyle="italic" />
 
 	<Button
 	    android:id="@+id/note_date"
-	    android:layout_weight="1"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:text="text"
-	    android:paddingLeft="20dp"
+	    android:layout_weight="1"
+	    android:background="@color/background_color"
 	    android:minHeight="20dp"
+	    android:paddingLeft="33dp"
+	    android:textColor="@color/light_gray"
 	    android:textSize="14sp"
 	    android:textStyle="italic"
-	    android:textColor="#798081"
-	    android:background="#F8F4FF"
 	    android:visibility="visible" />
-	
 	  
        </LinearLayout>
        
@@ -71,7 +71,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:background="#F8F4FF"
+		android:background="@color/background_color"
 	>	
 	<TextView
 	    android:layout_width="wrap_content"
@@ -80,21 +80,20 @@
 	    android:layout_weight="1"
 	    android:textSize="14sp"
 	    android:text="@string/note_details_labe3"
-	    android:textColor="#798081"
+	    android:textColor="@color/light_gray"
 	    android:textStyle="italic" />
 
 	<Button
 	    android:id="@+id/note_time"
 	    android:layout_weight="1"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:text="text"
+	    android:layout_height="wrap_content"  
 	    android:paddingLeft="20dp"
 	    android:minHeight="20dp"
 	    android:textSize="14sp"
 	    android:textStyle="italic"
-	    android:textColor="#798081"
-	    android:background="#F8F4FF"
+	   	android:textColor="@color/light_gray"
+	    android:background="@color/background_color"
 	    android:visibility="visible"
 	     />
 	
@@ -108,7 +107,8 @@
         android:paddingTop="80dp"
 		android:paddingLeft="20dp"
 		android:textSize="12sp"
-		android:text="Последнее обновление"
+		android:textColor="@color/light_gray"
+		android:text="@string/note_details_labe4"
 		style="@style/BigTextStyle"
 	/>
 	

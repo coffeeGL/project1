@@ -67,6 +67,13 @@ private ArrayList<Note> mNotes;
 		String dateString = sdf.format(date);   
 		dateTextView.setText(dateString);
 		
+		TextView timeTextView =
+		(TextView)convertView.findViewById(R.id.note_list_item_timeTextView);
+		Date time = c.getTime();
+		SimpleDateFormat df = new SimpleDateFormat("hh: mm");
+		String timeString = df.format(time);   
+		timeTextView.setText(timeString);
+		
 		return convertView;
 		}
 		}

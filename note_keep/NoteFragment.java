@@ -134,7 +134,7 @@ public class NoteFragment extends Fragment {
 			Date date = (Date)data
 			.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
 			mNote.setTime(date);
-			updateTime(); //call method to change time  
+			updateTime(); //call method to change time   
 		}
 	}
 

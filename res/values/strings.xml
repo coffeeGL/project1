@@ -7,7 +7,8 @@
     <string name="note_title_label">Заголовок</string>
 	<string name="note_details_label">Детали</string>
 	<string name="note_details_labe2">Установите дату</string>
-	<string name="note_details_labe3">Установите время</string>
+	<string name="note_details_labe3">и время дедлайна</string>
+	<string name="note_details_labe4">Последнее обновление:</string>
 	<string name="notes_title">Заметки</string>
 	<string name="date_picker_title">Дата дедлайна:</string>
     <string name="time_picker_title">Время дедлайна:</string>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tvBackground">#CCCCFF</color>
+    <color name="tvBackground2">#E0FFFF</color>
+    <color name="dark_gray">#212121</color>
+    <color name="less_dark_gray">#424242</color>
+    <color name="light_gray">#798081</color>
+    <color name="background_color">#F8F4FF</color>
+</resources>

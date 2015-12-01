@@ -8,14 +8,15 @@ import java.util.UUID;
 public class Note {
 	
 	private UUID mId;
-	private String mTitle;
-	private Date mDate;
-	private Date mTime;//new
+	private String mTitle; //text of the note
+	private Date mDate;  //day of deadline
+	private Date mTime; //time of deadline
 	
 	public Note() {
-	// Генерирование уникального идентификатора
+	// generate a unique id
 	mId = UUID.randomUUID();
 	mDate = new Date();
+	mTime = new Date();
 	}
 	
 	@Override
@@ -44,7 +45,7 @@ public class Note {
 		}
 	
 	public Date getTime() {
-		return mDate;
+		return mTime;
 		}
 	
 	public void setTime(Date date) {
