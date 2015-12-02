@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.UUID;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,6 +38,26 @@ public class NoteFragment extends Fragment {
 	
 	UUID noteId = (UUID)getArguments().getSerializable(EXTRA_NOTE_ID);
 	mNote = NoteLab.get(getActivity()).getNote(noteId);
+	setHasOptionsMenu(true);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+			switch (item.getItemId()) {
+				case android.R.id.home:
+					if (NavUtils.getParentActivityName(getActivity()) != null) {
+						NavUtils.navigateUpFromSameTask(getActivity());
+					}
+					return true;
+				default:
+					return super.onOptionsItemSelected(item);
+			}
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		NoteLab.get(getActivity()).saveNotes();
 	}
 	
 	public void updateDate() {
@@ -47,7 +70,7 @@ public class NoteFragment extends Fragment {
 	
 	public void updateTime() {
 		
-		SimpleDateFormat sd = new SimpleDateFormat("hh: mm");
+		SimpleDateFormat sd = new SimpleDateFormat("HH: mm");
 		String dateString = sd.format(mNote.getTime());
 		mTimeButton.setText(dateString);
 		
@@ -57,6 +80,12 @@ public class NoteFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 	Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_note, parent, false);
+		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			if (NavUtils.getParentActivityName(getActivity()) != null) {
+			getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+			}
+		}
 		mTitleField = (EditText)v.findViewById(R.id.note_title);
 		mTitleField.setText(mNote.getTitle());
 		mTitleField.addTextChangedListener(new TextWatcher() {

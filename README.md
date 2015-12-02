@@ -1,1 +1,1 @@
-This project is a simplified version of the Google Keep app.
+This app allows user to store his notes.

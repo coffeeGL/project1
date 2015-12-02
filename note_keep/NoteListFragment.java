@@ -3,48 +3,112 @@ package com.example.note_keep;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
+import com.example.note_keep.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class NoteListFragment extends ListFragment {
 private ArrayList<Note> mNotes;
+private ListView lnote;
+private ListAdapter adapter; 
+private Button emptyButton;
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	getActivity().setTitle(R.string.notes_title);
-	mNotes = NoteLab.get(getActivity()).getNotes();
-	NoteAdapter adapter = new NoteAdapter(mNotes);
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true); //here, we say that the instance of NoteListFragment should receive callbacks of command menu
+		getActivity().setTitle(R.string.notes_title);
+		mNotes = NoteLab.get(getActivity()).getNotes();
+		NoteAdapter adapter = new NoteAdapter(mNotes);
 			setListAdapter(adapter);
 	}
 	
 	@Override
 	public void onResume() {
-	super.onResume();
-	((NoteAdapter)getListAdapter()).notifyDataSetChanged();
+		super.onResume();
+		((NoteAdapter)getListAdapter()).notifyDataSetChanged();
 	}
+	
+	
+	//fill command menu, which defined in fragment_note_list.xml
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.fragment_note_list, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+			switch (item.getItemId()) {
+				case R.id.menu_item_new_note:
+					Note note = new Note();
+					NoteLab.get(getActivity()).addNote(note);
+					Intent i = new Intent(getActivity(), NotePagerActivity.class);
+					i.putExtra(NoteFragment.EXTRA_NOTE_ID, note.getId());
+					startActivityForResult(i, 0);
+					return true;
+				default:
+					return super.onOptionsItemSelected(item);
+			}
+			}
+		
 	
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-	Note c = ((NoteAdapter)getListAdapter()).getItem(position);
-	// Start NotePagerActivity with the Note object
-	Intent i = new Intent(getActivity(), NotePagerActivity.class);
-	i.putExtra(NoteFragment.EXTRA_NOTE_ID, c.getId());
-	startActivity(i);
+		Note c = ((NoteAdapter)getListAdapter()).getItem(position);
+		// Start NotePagerActivity with the Note object
+		Intent i = new Intent(getActivity(), NotePagerActivity.class);
+		i.putExtra(NoteFragment.EXTRA_NOTE_ID, c.getId());
+		startActivity(i);
 	}
+	
+	
+	 
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+	Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.list_view_empty_view, parent, false);
+		lnote=(ListView)v.findViewById(android.R.id.list);
+		lnote.setEmptyView(v.findViewById(android.R.id.empty));
+	    lnote.setAdapter(adapter);
+	    
+	    
+	    emptyButton = (Button)v.findViewById(android.R.id.empty);
+	    emptyButton.setOnClickListener(new View.OnClickListener() {
+	        public void onClick(View v) {
+	            
+	        	Note note = new Note();
+				NoteLab.get(getActivity()).addNote(note);
+				Intent i = new Intent(getActivity(), NotePagerActivity.class);
+				i.putExtra(NoteFragment.EXTRA_NOTE_ID, note.getId());
+				startActivityForResult(i, 0);
+	        }
+	    });
+	     
+	    
+	    return v;
+	}
+	 
 	
 	private class NoteAdapter extends ArrayAdapter<Note> {
 		public NoteAdapter(ArrayList<Note> notes) {
 		super(getActivity(), 0, notes);
 		}
+		
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -70,11 +134,13 @@ private ArrayList<Note> mNotes;
 		TextView timeTextView =
 		(TextView)convertView.findViewById(R.id.note_list_item_timeTextView);
 		Date time = c.getTime();
-		SimpleDateFormat df = new SimpleDateFormat("hh: mm");
+		SimpleDateFormat df = new SimpleDateFormat("HH: mm");
 		String timeString = df.format(time);   
 		timeTextView.setText(timeString);
 		
 		return convertView;
 		}
 		}
+	
+	
 }

@@ -3,9 +3,18 @@ package com.example.note_keep;
 import java.util.Date;
 import java.util.UUID;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+ 
  
 
 public class Note {
+	
+	private static final String JSON_ID = "id";
+	private static final String JSON_TITLE = "title";
+	private static final String JSON_DATE = "date";
+	private static final String JSON_TIME = "time";
 	
 	private UUID mId;
 	private String mTitle; //text of the note
@@ -18,6 +27,23 @@ public class Note {
 	mDate = new Date();
 	mTime = new Date();
 	}
+	
+	public Note(JSONObject json) throws JSONException {
+		mId = UUID.fromString(json.getString(JSON_ID));
+		mTitle = json.getString(JSON_TITLE); 
+		mDate = new Date(json.getLong(JSON_DATE));
+		mTime = new Date(json.getLong(JSON_TIME));
+		}
+	
+	public JSONObject toJSON() throws JSONException {
+		JSONObject json = new JSONObject();
+		json.put(JSON_ID, mId.toString());
+		json.put(JSON_TITLE, mTitle);
+		json.put(JSON_DATE, mDate.getTime());
+		json.put(JSON_TIME, mTime.getTime());
+		return json;
+		}
+	
 	
 	@Override
 	public String toString() {
