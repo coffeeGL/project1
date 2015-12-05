@@ -15,11 +15,13 @@ public class Note {
 	private static final String JSON_TITLE = "title";
 	private static final String JSON_DATE = "date";
 	private static final String JSON_TIME = "time";
+	private static final String JSON_DONE = "done";
 	
 	private UUID mId;
 	private String mTitle; //text of the note
 	private Date mDate;  //day of deadline
 	private Date mTime; //time of deadline
+	private boolean mDone;
 	
 	public Note() {
 	// generate a unique id
@@ -33,6 +35,7 @@ public class Note {
 		mTitle = json.getString(JSON_TITLE); 
 		mDate = new Date(json.getLong(JSON_DATE));
 		mTime = new Date(json.getLong(JSON_TIME));
+		mDone = json.getBoolean(JSON_DONE);
 		}
 	
 	public JSONObject toJSON() throws JSONException {
@@ -41,6 +44,7 @@ public class Note {
 		json.put(JSON_TITLE, mTitle);
 		json.put(JSON_DATE, mDate.getTime());
 		json.put(JSON_TIME, mTime.getTime());
+		json.put(JSON_DONE, mDone);
 		return json;
 		}
 	
@@ -76,6 +80,13 @@ public class Note {
 	
 	public void setTime(Date date) {
 		mTime = date;
+		}
+	
+	public boolean isDone() {
+		return mDone;
+		}
+		public void setDone(boolean done) {
+		mDone = done;
 		}
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Note_Keep</string>
+    <string name="app_name">Note Keep</string>
     <string name="action_settings">Settings</string>
     <string name="note_title_hint">Текст</string>
     <string name="note_title_label">Заголовок</string>
@@ -12,4 +12,8 @@
 	<string name="notes_title">Заметки</string>
 	<string name="date_picker_title">Дата дедлайна:</string>
     <string name="time_picker_title">Время дедлайна:</string>
+    <string name="new_note">Новая заметка</string>
+	<string name="delete_note">Удалить заметку</string>
+	<string name="help_string">Добавить заметку</string>
+	<string name="action_done_label">Выполнено! </string>
 </resources>

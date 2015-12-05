@@ -17,6 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 
 public class NoteFragment extends Fragment {
@@ -31,6 +34,7 @@ public class NoteFragment extends Fragment {
 	private EditText mTitleField;
 	private Button mDateButton;
 	private Button mTimeButton;
+	private CheckBox mDoneCheckBox;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -81,7 +85,7 @@ public class NoteFragment extends Fragment {
 	Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_note, parent, false);
 		
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			if (NavUtils.getParentActivityName(getActivity()) != null) {
 			getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 			}
@@ -135,6 +139,14 @@ public class NoteFragment extends Fragment {
 			}
 		});
 	
+	mDoneCheckBox = (CheckBox)v.findViewById(R.id.note_done);
+	mDoneCheckBox.setChecked(mNote.isDone());
+	mDoneCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+	{
+		mNote.setDone(isChecked);
+	}
+	});
 		
 	return v;
 	}

@@ -39,6 +39,10 @@ public class NoteLab {
 	public void addNote(Note c) {
 		mNotes.add(c);
 		}
+	//delete object
+	public void deleteNote(Note c) {
+		mNotes.remove(c);
+		}
 	
 	public boolean saveNotes() {
 		try {

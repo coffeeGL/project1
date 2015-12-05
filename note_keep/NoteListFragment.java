@@ -5,16 +5,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import com.example.note_keep.R;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.ActionMode;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView.MultiChoiceModeListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -64,7 +71,28 @@ private Button emptyButton;
 					return super.onOptionsItemSelected(item);
 			}
 			}
-		
+	
+	//create a context menu
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
+	{
+	getActivity().getMenuInflater().inflate(R.menu.note_list_item_context, menu);
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo)item.getMenuInfo();
+		int position = info.position;
+		NoteAdapter adapter = (NoteAdapter)getListAdapter();
+		Note note = adapter.getItem(position);
+			switch (item.getItemId()) {
+				case R.id.menu_item_delete_note:
+					NoteLab.get(getActivity()).deleteNote(note);
+					adapter.notifyDataSetChanged();
+					return true;
+				}
+			return super.onContextItemSelected(item);
+	}
 	
 	
 	@Override
@@ -98,7 +126,10 @@ private Button emptyButton;
 				startActivityForResult(i, 0);
 	        }
 	    });
+	    
 	     
+	    ListView listView = (ListView)v.findViewById(android.R.id.list);
+	    registerForContextMenu(listView);
 	    
 	    return v;
 	}
@@ -137,6 +168,10 @@ private Button emptyButton;
 		SimpleDateFormat df = new SimpleDateFormat("HH: mm");
 		String timeString = df.format(time);   
 		timeTextView.setText(timeString);
+		
+		CheckBox doneCheckBox =
+		(CheckBox)convertView.findViewById(R.id.note_list_item_doneCheckBox);
+		doneCheckBox.setChecked(c.isDone());
 		
 		return convertView;
 		}
