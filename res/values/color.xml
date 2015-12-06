@@ -6,4 +6,5 @@
     <color name="less_dark_gray">#424242</color>
     <color name="light_gray">#798081</color>
     <color name="background_color">#F8F4FF</color>
+    <color name="activated_background_color">#87CEEB</color>
 </resources>

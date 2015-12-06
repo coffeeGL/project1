@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import com.example.note_keep.R;
+
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -105,7 +107,7 @@ private Button emptyButton;
 	}
 	
 	
-	 
+	@TargetApi(20) 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 	Bundle savedInstanceState) {
@@ -127,10 +129,58 @@ private Button emptyButton;
 	        }
 	    });
 	    
-	     
-	    ListView listView = (ListView)v.findViewById(android.R.id.list);
-	    registerForContextMenu(listView);
 	    
+	    ListView listView = (ListView)v.findViewById(android.R.id.list); 
+	    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+	    	// context menu for old versions
+	    	registerForContextMenu(listView);
+	    	} else {
+	    	// context panel for IceCreamSandwich and new versions
+	    	listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+	    	listView.setMultiChoiceModeListener(new MultiChoiceModeListener(){
+	    		private int nr = 0;
+	    		
+	    		public void onItemCheckedStateChanged(ActionMode mode, int position,
+	    				long id, boolean checked) {
+	    			 if (checked)
+	                     nr++;
+	                 else
+	                     nr--;
+	                 mode.setTitle(nr + " выбран.");
+	    		}
+	    		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+	    				MenuInflater inflater = mode.getMenuInflater();
+	    				inflater.inflate(R.menu.note_list_item_context, menu);
+	    				return true;
+	    		}
+	    		
+	    		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+	    			return false;
+	    			}
+	    		
+	    		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+	    			switch (item.getItemId()) {
+	    				case R.id.menu_item_delete_note:
+	    					NoteAdapter adapter = (NoteAdapter)getListAdapter();
+	    					NoteLab noteLab = NoteLab.get(getActivity());
+	    					for (int i = adapter.getCount() - 1; i >= 0; i--) {
+	    					if (getListView().isItemChecked(i)) {
+	    						noteLab.deleteNote(adapter.getItem(i));
+	    					}
+	    					}
+	    					mode.finish();
+	    					adapter.notifyDataSetChanged();
+	    					return true;
+	    				default:
+	    				return false;
+	    				}
+	    				}
+	    		
+	    		public void onDestroyActionMode(ActionMode mode) {
+	    			   
+	    			}  
+	    				});
+	    	}   
 	    return v;
 	}
 	 

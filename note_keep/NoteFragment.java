@@ -21,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class NoteFragment extends Fragment {
 	
@@ -84,7 +85,7 @@ public class NoteFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 	Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_note, parent, false);
-		
+		v.isClickable();//new
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			if (NavUtils.getParentActivityName(getActivity()) != null) {
 			getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -108,7 +109,6 @@ public class NoteFragment extends Fragment {
 				// И здесь тоже
 			}
 	});
-	
 	
 	
 	mDateButton = (Button)v.findViewById(R.id.note_date);
