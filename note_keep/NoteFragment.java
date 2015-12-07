@@ -1,13 +1,18 @@
 package com.example.note_keep;
-
+import com.example.note_keep.AlertReceiver;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.UUID;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
@@ -36,11 +41,11 @@ public class NoteFragment extends Fragment {
 	private Button mDateButton;
 	private Button mTimeButton;
 	private CheckBox mDoneCheckBox;
+	private Button alertButton; //new
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	
 	UUID noteId = (UUID)getArguments().getSerializable(EXTRA_NOTE_ID);
 	mNote = NoteLab.get(getActivity()).getNote(noteId);
 	setHasOptionsMenu(true);
@@ -109,7 +114,18 @@ public class NoteFragment extends Fragment {
 				// И здесь тоже
 			}
 	});
-	
+	/*//new
+	v.setOnLongClickListener(new View.OnLongClickListener() {
+
+	        @Override
+	        public boolean onLongClick(View v) {
+	            Toast.makeText(getContext(), "Заметка удалена", Toast.LENGTH_SHORT).show();
+	            NoteLab noteLab = NoteLab.get(getActivity());
+	            noteLab.deleteNote(mNote);
+	            return true;
+	        }
+	    });
+	//new*/
 	
 	mDateButton = (Button)v.findViewById(R.id.note_date);
 	Date date = mNote.getDate();
@@ -147,11 +163,28 @@ public class NoteFragment extends Fragment {
 		mNote.setDone(isChecked);
 	}
 	});
+	
+	alertButton = (Button)v.findViewById(R.id.alarm_me); //new
+	alertButton.setOnClickListener(new View.OnClickListener() {
+		public void onClick(View v){
+			
+			Long alerTime = new GregorianCalendar().getTimeInMillis()+10*1000;
+			
+			Intent alertIntent = new Intent(getActivity(), AlertReceiver.class);
+			AlarmManager alarmManager = (AlarmManager)(getActivity().getSystemService( Context.ALARM_SERVICE ));
+			
+			alarmManager.set(AlarmManager.RTC_WAKEUP, alerTime,
+					PendingIntent.getBroadcast(getActivity(), 1, alertIntent, 
+							PendingIntent.FLAG_UPDATE_CURRENT));
+		}	
 		
+	});
+	
+	
 	return v;
 	}
 	
-	
+
 	public static NoteFragment newInstance(UUID noteId) {
 		Bundle args = new Bundle();
 		args.putSerializable(EXTRA_NOTE_ID, noteId);

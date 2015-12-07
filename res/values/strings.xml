@@ -16,4 +16,5 @@
 	<string name="delete_note">Удалить заметку</string>
 	<string name="help_string">Добавить заметку</string>
 	<string name="action_done_label">Выполнено! </string>
+	<string name="alarm_string">Напомнить мне! </string>
 </resources>

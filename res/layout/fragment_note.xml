@@ -100,6 +100,22 @@
 	  
        </LinearLayout>
        
+    <Button
+	    android:id="@+id/alarm_me"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"  
+	    android:paddingLeft="20dp"
+	    android:minHeight="20dp"
+	    android:textSize="12sp"
+	    android:textStyle="italic"
+	    android:text="@string/alarm_string"
+	    android:layout_marginTop="20dp"
+	    android:drawableLeft="@drawable/ic_action_alarms"
+	   	android:textColor="@color/light_gray"
+	    android:background="@color/background_color"
+	    android:visibility="visible"
+	     />
+       
     <CheckBox android:id="@+id/note_done"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -115,7 +131,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:textStyle="italic"
-        android:paddingTop="80dp"
+        android:paddingTop="60dp"
 		android:paddingLeft="20dp"
 		android:textSize="12sp"
 		android:textColor="@color/light_gray"
