@@ -1,18 +1,20 @@
 package com.example.note_keep;
 import com.example.note_keep.AlertReceiver;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
@@ -42,6 +44,7 @@ public class NoteFragment extends Fragment {
 	private Button mTimeButton;
 	private CheckBox mDoneCheckBox;
 	private Button alertButton; //new
+	private Context context;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -107,25 +110,45 @@ public class NoteFragment extends Fragment {
 	
 			public void beforeTextChanged(
 				CharSequence c, int start, int count, int after) {
-				// Здесь намеренно оставлено пустое место
+				 
 			}
 			
 			public void afterTextChanged(Editable c) {
-				// И здесь тоже
+				 
 			}
 	});
-	/*//new
-	v.setOnLongClickListener(new View.OnLongClickListener() {
-
-	        @Override
+	//new here we delete the note as a full screen view with the help of alert dialog
+		v.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
 	        public boolean onLongClick(View v) {
-	            Toast.makeText(getContext(), "Заметка удалена", Toast.LENGTH_SHORT).show();
-	            NoteLab noteLab = NoteLab.get(getActivity());
-	            noteLab.deleteNote(mNote);
-	            return true;
-	        }
-	    });
-	//new*/
+				AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+				builder.setMessage("Удалить заметку?") 
+				.setCancelable(false)
+				.setPositiveButton("ОК",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								Toast.makeText(getContext(), "Заметка удалена", Toast.LENGTH_SHORT).show();
+					            NoteLab noteLab = NoteLab.get(getActivity());
+					            noteLab.deleteNote(mNote);
+					            Intent i = new Intent(getActivity(), NoteListActivity.class);
+					            startActivityForResult(i, 0);
+					            
+							}
+						})
+				.setNegativeButton("NO",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+				AlertDialog alert = builder.create();
+				alert.show();
+				return true;
+			}
+			
+		});
+		
+	//new
 	
 	mDateButton = (Button)v.findViewById(R.id.note_date);
 	Date date = mNote.getDate();
@@ -168,8 +191,7 @@ public class NoteFragment extends Fragment {
 	alertButton.setOnClickListener(new View.OnClickListener() {
 		public void onClick(View v){
 			
-			Long alerTime = new GregorianCalendar().getTimeInMillis()+10*1000;
-			
+			Long alerTime = new GregorianCalendar().getTimeInMillis()+60*1000;
 			Intent alertIntent = new Intent(getActivity(), AlertReceiver.class);
 			AlarmManager alarmManager = (AlarmManager)(getActivity().getSystemService( Context.ALARM_SERVICE ));
 			
@@ -179,7 +201,7 @@ public class NoteFragment extends Fragment {
 		}	
 		
 	});
-	
+	//new
 	
 	return v;
 	}
