@@ -17,4 +17,6 @@
 	<string name="help_string">Добавить заметку</string>
 	<string name="action_done_label">Выполнено! </string>
 	<string name="alarm_string">Напомнить мне! </string>
+	<string name="action_startnotif">Вкл. напоминание</string>
+	<string name="action_stopnotif">Откл. напоминание</string>
 </resources>

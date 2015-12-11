@@ -1,7 +1,6 @@
 package com.example.note_keep;
-import com.example.note_keep.AlertReceiver;
+ 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
@@ -43,8 +42,8 @@ public class NoteFragment extends Fragment {
 	private Button mDateButton;
 	private Button mTimeButton;
 	private CheckBox mDoneCheckBox;
-	private Button alertButton; //new
-	private Context context;
+	private Button alertButton; 
+	 
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +92,7 @@ public class NoteFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 	Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_note, parent, false);
-		v.isClickable();//new
+		v.isClickable();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			if (NavUtils.getParentActivityName(getActivity()) != null) {
 			getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -117,7 +116,7 @@ public class NoteFragment extends Fragment {
 				 
 			}
 	});
-	//new here we delete the note as a full screen view with the help of alert dialog
+	//here we delete the note as a full screen view with the help of alert dialog
 		v.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 	        public boolean onLongClick(View v) {
@@ -131,7 +130,7 @@ public class NoteFragment extends Fragment {
 					            NoteLab noteLab = NoteLab.get(getActivity());
 					            noteLab.deleteNote(mNote);
 					            Intent i = new Intent(getActivity(), NoteListActivity.class);
-					            startActivityForResult(i, 0);
+					            startActivity(i);
 					            
 							}
 						})
@@ -148,7 +147,7 @@ public class NoteFragment extends Fragment {
 			
 		});
 		
-	//new
+	
 	
 	mDateButton = (Button)v.findViewById(R.id.note_date);
 	Date date = mNote.getDate();
@@ -187,21 +186,21 @@ public class NoteFragment extends Fragment {
 	}
 	});
 	
-	alertButton = (Button)v.findViewById(R.id.alarm_me); //new
+	/*alertButton = (Button)v.findViewById(R.id.alarm_me); //new
 	alertButton.setOnClickListener(new View.OnClickListener() {
 		public void onClick(View v){
 			
 			Long alerTime = new GregorianCalendar().getTimeInMillis()+60*1000;
 			Intent alertIntent = new Intent(getActivity(), AlertReceiver.class);
-			AlarmManager alarmManager = (AlarmManager)(getActivity().getSystemService( Context.ALARM_SERVICE ));
+			AlarmManager alarmManager = (AlarmManager)(v.getContext().getSystemService( Context.ALARM_SERVICE ));
 			
 			alarmManager.set(AlarmManager.RTC_WAKEUP, alerTime,
-					PendingIntent.getBroadcast(getActivity(), 1, alertIntent, 
+					PendingIntent.getBroadcast(v.getContext(), 1, alertIntent, 
 							PendingIntent.FLAG_UPDATE_CURRENT));
 		}	
 		
 	});
-	//new
+	//new*/
 	
 	return v;
 	}

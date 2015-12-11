@@ -4,5 +4,13 @@
 		  android:icon="@android:drawable/ic_menu_add"
 	      android:title="@string/new_note"
           android:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/action_startnotif"
+        android:title="@string/action_startnotif"
+        android:showAsAction="never"/>
+    <item
+        android:id="@+id/action_stopnotif"
+        android:title="@string/action_stopnotif"
+        android:showAsAction="never"/>
 
 </menu>

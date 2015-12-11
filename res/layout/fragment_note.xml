@@ -114,6 +114,7 @@
 	   	android:textColor="@color/light_gray"
 	    android:background="@color/background_color"
 	    android:visibility="visible"
+	    android:clickable="false"
 	     />
        
     <CheckBox android:id="@+id/note_done"

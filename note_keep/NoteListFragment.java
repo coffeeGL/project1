@@ -2,10 +2,16 @@ package com.example.note_keep;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
 import com.example.note_keep.R;
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,6 +75,26 @@ private Button emptyButton;
 					i.putExtra(NoteFragment.EXTRA_NOTE_ID, note.getId());
 					startActivityForResult(i, 0);
 					return true;
+				//if we want to start repeating notifications as reminders to open app and check notes
+				case R.id.action_startnotif:
+					Long alerTime = new GregorianCalendar().getTimeInMillis()+10*1000;
+					Intent alertIntent = new Intent(getActivity(), AlertReceiver.class);
+					AlarmManager alarmManager = (AlarmManager)(getActivity().getSystemService( Context.ALARM_SERVICE ));
+					
+					alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alerTime, 20*1000,
+							PendingIntent.getBroadcast(getActivity(), 1, alertIntent, 
+									0));
+					return true;
+				//if we want to stop repeating notifications	
+				case R.id.action_stopnotif:
+					Intent alertIntent2 = new Intent(getActivity(), AlertReceiver.class);
+					AlarmManager alarmManager2 = (AlarmManager)(getActivity().getSystemService( Context.ALARM_SERVICE ));
+					if(alarmManager2 != null){
+					alarmManager2.cancel(PendingIntent.getBroadcast(getActivity(), 1, alertIntent2, 
+									0));}
+					return true;
+				    
+				
 				default:
 					return super.onOptionsItemSelected(item);
 			}
@@ -125,7 +151,7 @@ private Button emptyButton;
 				NoteLab.get(getActivity()).addNote(note);
 				Intent i = new Intent(getActivity(), NotePagerActivity.class);
 				i.putExtra(NoteFragment.EXTRA_NOTE_ID, note.getId());
-				startActivityForResult(i, 0);
+				startActivity(i);
 	        }
 	    });
 	    
@@ -177,7 +203,7 @@ private Button emptyButton;
 	    				}
 	    		
 	    		public void onDestroyActionMode(ActionMode mode) {
-	    			   
+	    			   nr=0;
 	    			}  
 	    				});
 	    	}   
