@@ -16,18 +16,21 @@ public class Note {
 	private static final String JSON_DATE = "date";
 	private static final String JSON_TIME = "time";
 	private static final String JSON_DONE = "done";
+	private static final String JSON_LASTCHANGE = "lastchangedate";
 	
 	private UUID mId;
 	private String mTitle; //text of the note
 	private Date mDate;  //day of deadline
 	private Date mTime; //time of deadline
 	private boolean mDone;
+	private Date mLastChangeDate; //date of the last change of the note
 	
 	public Note() {
 	// generate a unique id
 	mId = UUID.randomUUID();
 	mDate = new Date();
 	mTime = new Date();
+	mLastChangeDate = new Date(); 
 	}
 	
 	public Note(JSONObject json) throws JSONException {
@@ -36,6 +39,7 @@ public class Note {
 		mDate = new Date(json.getLong(JSON_DATE));
 		mTime = new Date(json.getLong(JSON_TIME));
 		mDone = json.getBoolean(JSON_DONE);
+		mLastChangeDate = new Date(json.getLong(JSON_LASTCHANGE)); 
 		}
 	
 	public JSONObject toJSON() throws JSONException {
@@ -45,6 +49,7 @@ public class Note {
 		json.put(JSON_DATE, mDate.getTime());
 		json.put(JSON_TIME, mTime.getTime());
 		json.put(JSON_DONE, mDone);
+		json.put(JSON_LASTCHANGE, mLastChangeDate.getTime());
 		return json;
 		}
 	
@@ -88,5 +93,14 @@ public class Note {
 		public void setDone(boolean done) {
 		mDone = done;
 		}
-
+		
+		
+	public Date getLastChangeDate() {
+			return mLastChangeDate;
+		}
+		
+	public void setLastChageDate(Date date) {
+			mLastChangeDate = date;
+		}
+        
 }

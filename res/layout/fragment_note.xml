@@ -127,11 +127,19 @@
 		android:textColor="@color/light_gray"
 		android:text="@string/action_done_label"
 	/>
- 
+    
+    
+ <LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:background="@color/background_color"
+	>	
 	<TextView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:textStyle="italic"
+		android:layout_weight="1"
         android:paddingTop="60dp"
 		android:paddingLeft="20dp"
 		android:textSize="12sp"
@@ -139,6 +147,22 @@
 		android:text="@string/note_details_labe4"
 		style="@style/BigTextStyle"
 	/>
-	
+	<TextView
+	    android:id="@+id/last_change"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" 
+	    android:layout_weight="1" 
+	    android:paddingTop="60dp"
+	    android:paddingLeft="10dp" 
+	    android:textSize="12sp"
+	    android:textStyle="italic"
+	    android:text="@string/alarm_string"
+	   	android:textColor="@color/light_gray"
+	    android:background="@color/background_color"
+	    style="@style/BigTextStyle"
+	    android:visibility="visible"
+	    
+	     />
+</LinearLayout>	
 
 </LinearLayout>

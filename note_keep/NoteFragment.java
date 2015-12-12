@@ -2,13 +2,13 @@ package com.example.note_keep;
  
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
+//import java.util.GregorianCalendar;
 import java.util.UUID;
 import android.app.Activity;
-import android.app.AlarmManager;
+//import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
+//import android.app.PendingIntent;
+//import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -27,6 +27,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class NoteFragment extends Fragment {
@@ -42,7 +43,8 @@ public class NoteFragment extends Fragment {
 	private Button mDateButton;
 	private Button mTimeButton;
 	private CheckBox mDoneCheckBox;
-	private Button alertButton; 
+	private TextView mLastChangeDateTextView; 
+	//private Button alertButton; 
 	 
 	
 	@Override
@@ -88,6 +90,14 @@ public class NoteFragment extends Fragment {
 		
 	}
 	
+	public void updateLastChangeDate() {
+		 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH: mm");
+		String dateString = sdf.format(mNote.getLastChangeDate());  
+		mLastChangeDateTextView.setText(dateString);
+		
+		}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 	Bundle savedInstanceState) {
@@ -113,7 +123,8 @@ public class NoteFragment extends Fragment {
 			}
 			
 			public void afterTextChanged(Editable c) {
-				 
+				mNote.setLastChageDate(new Date());
+				updateLastChangeDate(); 
 			}
 	});
 	//here we delete the note as a full screen view with the help of alert dialog
@@ -123,7 +134,7 @@ public class NoteFragment extends Fragment {
 				AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 				builder.setMessage("Удалить заметку?") 
 				.setCancelable(false)
-				.setPositiveButton("ОК",
+				.setPositiveButton("Удалить заметку",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								Toast.makeText(getContext(), "Заметка удалена", Toast.LENGTH_SHORT).show();
@@ -134,7 +145,7 @@ public class NoteFragment extends Fragment {
 					            
 							}
 						})
-				.setNegativeButton("NO",
+				.setNegativeButton("Отмена",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								dialog.cancel();
@@ -202,6 +213,9 @@ public class NoteFragment extends Fragment {
 	});
 	//new*/
 	
+	mLastChangeDateTextView = (TextView)v.findViewById(R.id.last_change);
+	updateLastChangeDate();
+	
 	return v;
 	}
 	
@@ -223,13 +237,17 @@ public class NoteFragment extends Fragment {
 			Date date = (Date)data
 			.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
 			mNote.setDate(date);
-			updateDate(); //call method to change date   
+			updateDate(); //call method to change date 
+			mNote.setLastChageDate(new Date());
+			updateLastChangeDate(); 
 		}
 		else if (requestCode == REQUEST_TIME) {
 			Date date = (Date)data
 			.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
 			mNote.setTime(date);
-			updateTime(); //call method to change time   
+			updateTime(); //call method to change time
+			mNote.setLastChageDate(new Date());
+			updateLastChangeDate(); 
 		}
 	}
 
