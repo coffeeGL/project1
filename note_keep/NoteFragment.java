@@ -2,13 +2,10 @@ package com.example.note_keep;
  
 import java.text.SimpleDateFormat;
 import java.util.Date;
-//import java.util.GregorianCalendar;
 import java.util.UUID;
+
 import android.app.Activity;
-//import android.app.AlarmManager;
 import android.app.AlertDialog;
-//import android.app.PendingIntent;
-//import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -19,6 +16,8 @@ import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,6 @@ public class NoteFragment extends Fragment {
 	private Button mTimeButton;
 	private CheckBox mDoneCheckBox;
 	private TextView mLastChangeDateTextView; 
-	//private Button alertButton; 
 	 
 	
 	@Override
@@ -55,6 +53,13 @@ public class NoteFragment extends Fragment {
 	setHasOptionsMenu(true);
 	}
 	
+	//fill command menu, which defined in fragment_note_list.xml
+		@Override
+		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+			super.onCreateOptionsMenu(menu, inflater);
+			inflater.inflate(R.menu.fragment_note, menu);
+		}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 			switch (item.getItemId()) {
@@ -63,6 +68,38 @@ public class NoteFragment extends Fragment {
 						NavUtils.navigateUpFromSameTask(getActivity());
 					}
 					return true;
+					
+				case R.id.menu_item_make_picture:
+					Intent i = new Intent(getActivity(), NoteCameraActivity.class);
+					startActivity(i);
+					return true;
+				
+				case R.id.menu_item_delete_note:
+					AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+					builder.setMessage("Удалить заметку?") 
+					.setCancelable(false)
+					.setPositiveButton("Удалить заметку",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int id) {
+									Toast.makeText(getContext(), "Заметка удалена", Toast.LENGTH_SHORT).show();
+						            NoteLab noteLab = NoteLab.get(getActivity());
+						            noteLab.deleteNote(mNote);
+						            Intent i = new Intent(getActivity(), NoteListActivity.class);
+						            startActivity(i);
+						            
+								}
+							})
+					.setNegativeButton("Отмена",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int id) {
+									dialog.cancel();
+								}
+							});
+					AlertDialog alert = builder.create();
+					alert.show();
+					return true;
+					
+				
 				default:
 					return super.onOptionsItemSelected(item);
 			}
@@ -127,6 +164,8 @@ public class NoteFragment extends Fragment {
 				updateLastChangeDate(); 
 			}
 	});
+		
+	//delete?	
 	//here we delete the note as a full screen view with the help of alert dialog
 		v.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
@@ -157,7 +196,7 @@ public class NoteFragment extends Fragment {
 			}
 			
 		});
-		
+		//delete?
 	
 	
 	mDateButton = (Button)v.findViewById(R.id.note_date);
@@ -194,24 +233,12 @@ public class NoteFragment extends Fragment {
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 	{
 		mNote.setDone(isChecked);
+		mNote.setLastChageDate(new Date());
+		updateLastChangeDate(); 
 	}
 	});
 	
-	/*alertButton = (Button)v.findViewById(R.id.alarm_me); //new
-	alertButton.setOnClickListener(new View.OnClickListener() {
-		public void onClick(View v){
-			
-			Long alerTime = new GregorianCalendar().getTimeInMillis()+60*1000;
-			Intent alertIntent = new Intent(getActivity(), AlertReceiver.class);
-			AlarmManager alarmManager = (AlarmManager)(v.getContext().getSystemService( Context.ALARM_SERVICE ));
-			
-			alarmManager.set(AlarmManager.RTC_WAKEUP, alerTime,
-					PendingIntent.getBroadcast(v.getContext(), 1, alertIntent, 
-							PendingIntent.FLAG_UPDATE_CURRENT));
-		}	
-		
-	});
-	//new*/
+	
 	
 	mLastChangeDateTextView = (TextView)v.findViewById(R.id.last_change);
 	updateLastChangeDate();

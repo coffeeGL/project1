@@ -100,29 +100,12 @@
 	  
        </LinearLayout>
        
-    <Button
-	    android:id="@+id/alarm_me"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"  
-	    android:paddingLeft="20dp"
-	    android:minHeight="20dp"
-	    android:textSize="12sp"
-	    android:textStyle="italic"
-	    android:text="@string/alarm_string"
-	    android:layout_marginTop="20dp"
-	    android:drawableLeft="@drawable/ic_action_alarms"
-	   	android:textColor="@color/light_gray"
-	    android:background="@color/background_color"
-	    android:visibility="visible"
-	    android:clickable="false"
-	     />
-       
     <CheckBox android:id="@+id/note_done"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="16dp"
 		android:layout_marginRight="16dp"
-		android:layout_marginTop="30dp"
+		android:layout_marginTop="60dp"
 		android:textSize="12sp"
 		android:textColor="@color/light_gray"
 		android:text="@string/action_done_label"
