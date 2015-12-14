@@ -1,9 +1,14 @@
 package com.example.note_keep;
 
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
@@ -18,8 +23,58 @@ import android.widget.Button;
 
 public class NoteCameraFragment extends Fragment {
 	private static final String TAG = "NoteCameraFragment";
+	public static final String EXTRA_PHOTO_FILENAME =
+			"com.example.note_keep.photo_filename";
+	
 	private Camera mCamera;
 	private SurfaceView mSurfaceView;
+	private View mProgressContainer;
+	
+	private Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
+		public void onShutter() {
+			// Отображение индикатора прогресса
+			mProgressContainer.setVisibility(View.VISIBLE);
+			}
+	};
+	
+	private Camera.PictureCallback mJpegCallback = new Camera.PictureCallback() {
+		public void onPictureTaken(byte[] data, Camera camera) {
+			// Создание имени файла
+			String filename = UUID.randomUUID().toString() + ".jpg";
+			// Сохранение данных jpeg на диске
+			FileOutputStream os = null;
+			boolean success = true;
+			try {
+				os = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
+				os.write(data);
+			} catch (Exception e) {
+				Log.e(TAG, "Error writing to file " + filename, e);
+				success = false;
+			} finally {
+				try {
+					if (os != null)
+						os.close();
+			} catch (Exception e) {
+				Log.e(TAG, "Error closing file " + filename, e);
+				success = false;
+				}
+			}
+			if (success) {
+				//Log.i(TAG, "JPEG saved at " + filename);
+				// Имя файла фотографии записывается в интент результата
+				if (success) {
+				Intent i = new Intent();
+				i.putExtra(EXTRA_PHOTO_FILENAME, filename);
+				getActivity().setResult(Activity.RESULT_OK, i);
+				} else {
+					getActivity().setResult(Activity.RESULT_CANCELED);
+				}
+			}
+			getActivity().finish();
+			}
+		};
+		
+	
 	
 	@Override
 	public void onResume() {
@@ -45,10 +100,16 @@ public class NoteCameraFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_note_camera, parent, false);
+		
+		mProgressContainer = v.findViewById(R.id.camera_progressContainer);
+		mProgressContainer.setVisibility(View.INVISIBLE);
+		
 		Button makePictureButton = (Button)v.findViewById(R.id.camera_makePicture);
 		makePictureButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				getActivity().finish();
+				if (mCamera != null) {
+					mCamera.takePicture(mShutterCallback, null, mJpegCallback);
+					}
 				}
 		});
 		mSurfaceView = (SurfaceView)v.findViewById(R.id.camera_surfaceView);
@@ -88,6 +149,8 @@ public class NoteCameraFragment extends Fragment {
 			Camera.Parameters parameters = mCamera.getParameters();
 			Size s = getBestSupportedSize(parameters.getSupportedPreviewSizes(), w, h);
 			parameters.setPreviewSize(s.width, s.height);
+			s = getBestSupportedSize(parameters.getSupportedPictureSizes(), w, h);
+			parameters.setPictureSize(s.width, s.height);
 			mCamera.setParameters(parameters);
 			try {
 				mCamera.startPreview();

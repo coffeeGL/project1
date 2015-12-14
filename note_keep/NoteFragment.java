@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,12 +32,14 @@ import android.widget.Toast;
 
 public class NoteFragment extends Fragment {
 	
+	private static final String TAG = "NoteFragment";
 	public static final String EXTRA_NOTE_ID =
 			"com.example.note_keep.note_id";
 	private static final String DIALOG_DATE = "date";
 	private static final String DIALOG_TIME = "time";
 	private static final int REQUEST_DATE = 0;
 	private static final int REQUEST_TIME = 1;
+	private static final int REQUEST_PHOTO = 2;
 	private Note mNote;
 	private EditText mTitleField;
 	private Button mDateButton;
@@ -71,7 +74,7 @@ public class NoteFragment extends Fragment {
 					
 				case R.id.menu_item_make_picture:
 					Intent i = new Intent(getActivity(), NoteCameraActivity.class);
-					startActivity(i);
+					startActivityForResult(i, REQUEST_PHOTO);
 					return true;
 				
 				case R.id.menu_item_delete_note:
@@ -276,6 +279,13 @@ public class NoteFragment extends Fragment {
 			mNote.setLastChageDate(new Date());
 			updateLastChangeDate(); 
 		}
+		else if (requestCode == REQUEST_PHOTO) {
+		 
+		String filename = data.getStringExtra(NoteCameraFragment.EXTRA_PHOTO_FILENAME);
+		if (filename != null) {
+		Log.i(TAG, "filename: " + filename);
+		}
+	    }
+	}
 	}
 
-}
