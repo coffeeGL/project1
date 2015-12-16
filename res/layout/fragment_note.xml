@@ -5,6 +5,16 @@
 		android:orientation="vertical"
 		android:background="@color/background_color"
 	>
+	
+    <ImageView 
+        android:id="@+id/camera_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:scaleType="centerInside"
+        android:background="@color/background_color"
+        android:cropToPadding="true"
+        
+        />
 
 	<TextView
 	    style="@style/BigTextStyle"
@@ -123,7 +133,7 @@
 		android:layout_height="wrap_content"
 		android:textStyle="italic"
 		android:layout_weight="1"
-        android:paddingTop="60dp"
+        android:paddingTop="20dp"
 		android:paddingLeft="20dp"
 		android:textSize="12sp"
 		android:textColor="@color/light_gray"
@@ -135,7 +145,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content" 
 	    android:layout_weight="1" 
-	    android:paddingTop="60dp"
+	    android:paddingTop="20dp"
 	    android:paddingLeft="10dp" 
 	    android:textSize="12sp"
 	    android:textStyle="italic"

@@ -17,6 +17,7 @@ public class Note {
 	private static final String JSON_TIME = "time";
 	private static final String JSON_DONE = "done";
 	private static final String JSON_LASTCHANGE = "lastchangedate";
+	private static final String JSON_PHOTO = "photo";
 	
 	private UUID mId;
 	private String mTitle; //text of the note
@@ -24,6 +25,7 @@ public class Note {
 	private Date mTime; //time of deadline
 	private boolean mDone;
 	private Date mLastChangeDate; //date of the last change of the note
+	private Photo mPhoto;
 	
 	public Note() {
 	// generate a unique id
@@ -39,7 +41,9 @@ public class Note {
 		mDate = new Date(json.getLong(JSON_DATE));
 		mTime = new Date(json.getLong(JSON_TIME));
 		mDone = json.getBoolean(JSON_DONE);
-		mLastChangeDate = new Date(json.getLong(JSON_LASTCHANGE)); 
+		mLastChangeDate = new Date(json.getLong(JSON_LASTCHANGE));
+		if (json.has(JSON_PHOTO))
+			mPhoto = new Photo(json.getJSONObject(JSON_PHOTO));
 		}
 	
 	public JSONObject toJSON() throws JSONException {
@@ -50,6 +54,8 @@ public class Note {
 		json.put(JSON_TIME, mTime.getTime());
 		json.put(JSON_DONE, mDone);
 		json.put(JSON_LASTCHANGE, mLastChangeDate.getTime());
+		if (mPhoto != null)
+			json.put(JSON_PHOTO, mPhoto.toJSON());
 		return json;
 		}
 	
@@ -101,6 +107,14 @@ public class Note {
 		
 	public void setLastChageDate(Date date) {
 			mLastChangeDate = date;
+		}
+	
+	public Photo getPhoto() {
+		return mPhoto;
+	}
+		
+	public void setPhoto(Photo p) {
+		mPhoto = p;
 		}
         
 }

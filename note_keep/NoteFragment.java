@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ public class NoteFragment extends Fragment {
 	private Button mTimeButton;
 	private CheckBox mDoneCheckBox;
 	private TextView mLastChangeDateTextView; 
+	private ImageView mPhotoView;
 	 
 	
 	@Override
@@ -246,7 +249,33 @@ public class NoteFragment extends Fragment {
 	mLastChangeDateTextView = (TextView)v.findViewById(R.id.last_change);
 	updateLastChangeDate();
 	
+	mPhotoView = (ImageView)v.findViewById(R.id.camera_imageView);
+	
 	return v;
+	}
+	
+	private void showPhoto() {
+	
+		Photo p = mNote.getPhoto();
+		BitmapDrawable b = null;
+		if (p != null) {
+			String path = getActivity()
+				.getFileStreamPath(p.getFilename()).getAbsolutePath();
+			b = PictureUtils.getScaledDrawable(getActivity(), path);
+		}
+		mPhotoView.setImageDrawable(b);
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		showPhoto();
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		PictureUtils.cleanImageView(mPhotoView);
 	}
 	
 
@@ -283,7 +312,11 @@ public class NoteFragment extends Fragment {
 		 
 		String filename = data.getStringExtra(NoteCameraFragment.EXTRA_PHOTO_FILENAME);
 		if (filename != null) {
-		Log.i(TAG, "filename: " + filename);
+		//Log.i(TAG, "filename: " + filename);
+			Photo p = new Photo(filename);
+			mNote.setPhoto(p);
+			showPhoto();
+			//Log.i(TAG, "Note: " + mNote.getTitle() + " has a photo");
 		}
 	    }
 	}

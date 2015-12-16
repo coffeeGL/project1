@@ -32,16 +32,16 @@ public class NoteCameraFragment extends Fragment {
 	
 	private Camera.ShutterCallback mShutterCallback = new Camera.ShutterCallback() {
 		public void onShutter() {
-			// Отображение индикатора прогресса
+			//display progress bar
 			mProgressContainer.setVisibility(View.VISIBLE);
 			}
 	};
 	
 	private Camera.PictureCallback mJpegCallback = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
-			// Создание имени файла
+			// Create name of the file
 			String filename = UUID.randomUUID().toString() + ".jpg";
-			// Сохранение данных jpeg на диске
+			// Save data in jpeg format on the disk
 			FileOutputStream os = null;
 			boolean success = true;
 			try {
@@ -61,7 +61,7 @@ public class NoteCameraFragment extends Fragment {
 			}
 			if (success) {
 				//Log.i(TAG, "JPEG saved at " + filename);
-				// Имя файла фотографии записывается в интент результата
+				//The name of the photo file record in the intent of result
 				if (success) {
 				Intent i = new Intent();
 				i.putExtra(EXTRA_PHOTO_FILENAME, filename);
