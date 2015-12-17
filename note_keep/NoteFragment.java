@@ -39,6 +39,7 @@ public class NoteFragment extends Fragment {
 			"com.example.note_keep.note_id";
 	private static final String DIALOG_DATE = "date";
 	private static final String DIALOG_TIME = "time";
+	private static final String DIALOG_IMAGE = "image";
 	private static final int REQUEST_DATE = 0;
 	private static final int REQUEST_TIME = 1;
 	private static final int REQUEST_PHOTO = 2;
@@ -250,6 +251,20 @@ public class NoteFragment extends Fragment {
 	updateLastChangeDate();
 	
 	mPhotoView = (ImageView)v.findViewById(R.id.camera_imageView);
+	mPhotoView.setOnClickListener(new View.OnClickListener() {
+		public void onClick(View v) {
+			Photo p = mNote.getPhoto();
+			if (p == null)
+				return;
+		
+				FragmentManager fm = getActivity()
+					.getSupportFragmentManager();
+				String path = getActivity()
+					.getFileStreamPath(p.getFilename()).getAbsolutePath();
+				ImageFragment.newInstance(path)
+					.show(fm, DIALOG_IMAGE);
+				}
+			});
 	
 	return v;
 	}
