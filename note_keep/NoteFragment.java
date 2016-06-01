@@ -2,10 +2,13 @@ package com.example.note_keep;
  
 import java.text.SimpleDateFormat;
 import java.util.Date;
+//import java.util.GregorianCalendar;
 import java.util.UUID;
-
 import android.app.Activity;
+//import android.app.AlarmManager;
 import android.app.AlertDialog;
+//import android.app.PendingIntent;
+//import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -80,7 +84,19 @@ public class NoteFragment extends Fragment {
 					Intent i = new Intent(getActivity(), NoteCameraActivity.class);
 					startActivityForResult(i, REQUEST_PHOTO);
 					return true;
-				
+					
+			    
+				case R.id.menu_item_export_note:
+				    Intent p = new Intent(Intent.ACTION_SEND);
+					p.setType("text/plain");
+					p.putExtra(Intent.EXTRA_TEXT, getNoteExport());
+					p.putExtra(Intent.EXTRA_SUBJECT,
+					getString(R.string.note_export_subject));
+					p = Intent.createChooser(p, getString(R.string.send_note));
+					startActivity(p);
+					return true;
+				 
+					
 				case R.id.menu_item_delete_note:
 					AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 					builder.setMessage("Удалить заметку?") 
@@ -293,6 +309,20 @@ public class NoteFragment extends Fragment {
 		PictureUtils.cleanImageView(mPhotoView);
 	}
 	
+	public String getNoteExport() {
+		String doneString = null;
+		if (mNote.isDone()) {
+		doneString = getString(R.string.note_report_done);
+		} else {
+		doneString = getString(R.string.note_report_undone);
+		}
+		String dateFormat = "EEE, MMM dd";
+		String dateString = DateFormat.format(dateFormat, mNote.getDate()).toString();
+		 
+		String report = getString(R.string.note_report,
+		mNote.getTitle(), dateString, doneString);
+		return report;
+		}
 
 	public static NoteFragment newInstance(UUID noteId) {
 		Bundle args = new Bundle();
@@ -324,7 +354,7 @@ public class NoteFragment extends Fragment {
 			updateLastChangeDate(); 
 		}
 		else if (requestCode == REQUEST_PHOTO) {
-		 
+		// Создание нового объекта Photo и связывание его с Note
 		String filename = data.getStringExtra(NoteCameraFragment.EXTRA_PHOTO_FILENAME);
 		if (filename != null) {
 		//Log.i(TAG, "filename: " + filename);

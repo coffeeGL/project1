@@ -14,10 +14,20 @@
     <string name="time_picker_title">Время дедлайна:</string>
     <string name="new_note">Новая заметка</string>
 	<string name="delete_note">Удалить заметку</string>
+	<string name="export_note">Поделиться заметкой</string>
 	<string name="help_string">Добавить заметку</string>
 	<string name="action_done_label">Выполнено! </string>
 	<string name="alarm_string">Напомнить мне! </string>
 	<string name="action_startnotif">Вкл. напоминание</string>
 	<string name="action_stopnotif">Откл. напоминание</string>
+	<string name="camera_button_text">OK</string>
 	<string name="new_picture">Добавить фото</string>
+	<string name="note_export_subject">NoteKeep Note Export</string>
+	<string name="note_report_done">Дело сделано</string>
+	<string name="note_report_undone">Дело еще не сделано</string>
+	
+	<string name="note_report">%1$s!
+		Заметка была сделана в %2$s. %3$s
+	</string>
+	<string name="send_note">Отправить заметку через</string>
 </resources>
